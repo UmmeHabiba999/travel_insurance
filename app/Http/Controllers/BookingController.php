@@ -39,8 +39,7 @@ class BookingController extends Controller
             $booking = Booking::create($request->all());
 
             if ($booking) {
-
-
+                
                 return $this->sendResponse('booking  saved successfully.');
             } else {
                 return $this->sendError('Failed to add data');
