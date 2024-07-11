@@ -16,13 +16,13 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('middle_name');
             $table->string('last_name');
+            $table->string('country');
             $table->longText('address');
             $table->string('city');
             $table->integer('zip_code');
             $table->string('state_of_residence');
             $table->string('phone_number');
             $table->string('email');
-            $table->string('confirm_email');
             $table->date('birth_date');
             $table->integer('age');
             $table->timestamps();

@@ -8,8 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class TravelerInfo extends Model
 {
     use HasFactory;
-     
+
     protected $fillable = [
+        'country',
         'first_name',
         'middle_name',
         'last_name',
@@ -19,7 +20,6 @@ class TravelerInfo extends Model
         'state_of_residence',
         'phone_number',
         'email',
-        'confirm_email',
         'birth_date',
         'age',
     ];

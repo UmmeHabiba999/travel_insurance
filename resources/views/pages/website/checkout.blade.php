@@ -127,7 +127,7 @@
     }
 
     .step-1-checked .stepper-counter {
-        background-image: url('../assets/imgs/CheckCircle.svg');
+        background-image: url('../assets/images/CheckCircle.svg');
         background-position: 50%;
         background-size: cover;
         border-color: #138636;
@@ -189,10 +189,17 @@
 
             <div class="col-md-7">
                 <h6 class="sm-heading mt-4">TRIP DESTINATION</h6>
+                <form id="addCheckout" >
+                    @csrf
                 <div class="Plans_boxPlans px-5 py-3">
                     <div>
                         <label class="checkout-form-label">Country *</label>
-                        <select class="checkout-input form-select"></select>
+                        <input name="country" type="text" class="checkout-input form-control required" value="{{ $booking->destination_country }}" readonly>
+
+
+                        {{-- <select name="country" class="checkout-input form-select">
+                            <option value="pakistan">Pakisytan</option>
+                        </select> --}}
                     </div>
                 </div>
 
@@ -200,56 +207,57 @@
                 <div class="Plans_boxPlans px-5 py-3">
                     <div>
                         <label class="checkout-form-label">First Name *</label>
-                        <input type="text" class="checkout-input form-control">
+                        <input name="first_name" type="text" class="checkout-input form-control required">
                     </div>
                     <div>
                         <label class="checkout-form-label">Middle Name</label>
-                        <input type="text" class="checkout-input form-control">
+                        <input name="middle_name" type="text" class="checkout-input form-control required">
                     </div>
                     <div>
                         <label class="checkout-form-label">Last Name *</label>
-                        <input type="text" class="checkout-input form-control">
+                        <input name="last_name" type="text" class="checkout-input form-control required">
                     </div>
                     <div>
                         <label class="checkout-form-label">Address *</label>
-                        <input type="text" class="checkout-input form-control">
+                        <input name="address" type="text" class="checkout-input form-control required">
                     </div>
                     <div class="row">
                         <div class="col-md-6">
                             <label class="checkout-form-label">City *</label>
-                            <input type="text" class="checkout-input form-control">
+                            <input name="city" type="text" class="checkout-input form-control required">
                         </div>
                         <div class="col-md-6">
                             <label class="checkout-form-label">Zip Code *</label>
-                            <input type="text" class="checkout-input form-control">
+                            <input name="zip_code" type="text" class="checkout-input form-control required">
                         </div>
                     </div>
 
                     <div>
                         <label class="checkout-form-label">State of Residence *</label>
-                        <input type="text" class="checkout-input form-control">
+                        <input name="state_of_residence" type="text" class="checkout-input form-control required">
                     </div>
                     <div>
                         <label class="checkout-form-label">Phone Number *</label>
-                        <input type="number" class="checkout-input form-control">
+                        <input name="phone_number" type="number" class="checkout-input form-control required">
                     </div>
                     <div>
                         <label class="checkout-form-label">Email *</label>
-                        <input type="text" class="checkout-input form-control">
+                        <input name="email" type="text" class="checkout-input form-control required">
                     </div>
                     <div>
                         <label class="checkout-form-label">Email Confirmation *</label>
-                        <input type="text" class="checkout-input form-control">
+                        <input name="email_confirmation" type="text" class="checkout-input form-control required">
                     </div>
                     <div class="row">
                         <div class="col-md-6">
                             <label class="checkout-form-label">Birth Date *</label>
-                            <input type="date" class="checkout-input form-control">
+                            <input name="birth_date" type="date" class="checkout-input form-control required">
                         </div>
                         <div class="col-md-6">
                             <label class="checkout-form-label">Age *</label>
-                            <input type="number" class="checkout-input form-control">
+                            <input name="age" type="number" value={{ $booking->age_of_travelers }} class="checkout-input form-control" readonly>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -288,63 +296,64 @@
                     <div class="mt-5">
                         <h6 class="sm-heading mt-4">PAYMENT</h6>
                         <div class="p-5" style="background: #00008f;">
-                            <img src="../assets/imgs/card.png" alt="">
+                            <img src="../assets/images/card.png" alt="">
+
                             <div>
                                 <label class="checkout-form-label text-white mt-3">Full Name (as displayed on Card)
                                     *</label>
-                                <input type="text" class="checkout-input form-control">
+                                <input name="full_name" type="text" class="checkout-input form-control required">
                             </div>
                             <div>
                                 <label class="checkout-form-label text-white mt-3">Card Number *</label>
-                                <input type="number" class="checkout-input form-control">
+                                <input name="card_number" type="number" class="checkout-input form-control required">
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <label class="checkout-form-label text-white mt-3">Expiration Date *</label>
-                                    <input type="date" class="checkout-input form-control">
+                                    <input name="expiration_date" type="date" class="checkout-input form-control required">
                                 </div>
                                 <div class="col-md-6">
                                     <label class="checkout-form-label text-white mt-3">CVC *</label>
-                                    <input type="date" class="checkout-input form-control">
+                                    <input name="cvc" type="number" class="checkout-input form-control required">
                                 </div>
                             </div>
                             <div>
                                 <label class="checkout-form-label text-white mt-3">Address *</label>
-                                <input type="text" class="checkout-input form-control">
+                                <input name="payment_address" type="text" class="checkout-input form-control required">
                             </div>
                             <div>
                                 <label class="checkout-form-label text-white mt-3">City *</label>
-                                <input type="text" class="checkout-input form-control">
+                                <input name="payment_city" type="text" class="checkout-input form-control required">
                             </div>
                             <div>
                                 <label class="checkout-form-label text-white mt-3">Zip Code *</label>
-                                <input type="text" class="checkout-input form-control">
+                                <input name="payment_zip_code" type="text" class="checkout-input form-control required">
                             </div>
                             <div>
                                 <label class="checkout-form-label text-white mt-3">Country *</label>
-                                <input type="text" class="checkout-input form-control">
+                                <input name="payment_country" type="text" class="checkout-input form-control required">
                             </div>
                             <div>
                                 <label class="checkout-form-label text-white mt-3">State of Residence *</label>
-                                <select class="checkout-input form-select">
+                                <select name="payment_state_of_residence" id="single" class="checkout-input form-select required">
                                     <option value=""></option>
                                 </select>
                             </div>
                             <div class="d-flex align-items-center gap-2 mt-4">
-                                <input type="checkbox" class="checkout-input" style="width: 3%">
+                                <input name="billing_address" type="checkbox" class="checkout-input" style="width: 3%" >
                                 <p class="text-white mb-0">Please, uncheck this box if billing address is not the same
                                     as
                                     policy holder address</p>
                             </div>
 
                             <div class="d-flex align-items-center gap-2">
-                                <input type="checkbox" class="checkout-input" style="width: 3%">
+                                <input name="promotional_info" type="checkbox" class="checkout-input " style="width: 3%">
                                 <p class="text-white mb-0"> Yes, I would like to receive promotional information
                                     occasionally</p>
                             </div>
 
                             <div class="d-flex gap-2">
-                                <input type="checkbox" class="checkout-input" style="width: 3%">
+                                <input name="terms_conditions" type="checkbox" class="checkout-input" style="width: 3%">
                                 <p class="text-white mb-0" style="width: 97%;">By checking here you agree to our Terms
                                     and Conditions,
                                     Nationwide Disclosure and acknowledge that you have read the Privacy Policy</p>
@@ -354,16 +363,101 @@
                                 <h5 class="mb-0">TOTAL TO PAY</h5>
                                 <h3 class="mb-0">$24.00USD</h3>
                             </div>
-                            <button class="btn btn-purchase mt-4">COMPLETE PURCASE</button>
+                            <button class="btn btn-purchase mt-4" type="button"  id="submitCheckout">COMPLETE PURCHASE</button>
+
                         </div>
                     </div>
                 </div>
             </div>
+        </form>
         </div>
     </div>
 
 </body>
 @endsection
 @section('insertjavascript')
+<script>
+    $(document).ready(function () {
 
+        //handle chechboxes
+         $('input[type="checkbox"]').change(function () {
+            if ($(this).is(':checked')) {
+                $(this).val(1);
+            } else {
+                $(this).val(0);
+            }
+        });
+
+            $('#submitCheckout').click(function () {
+                var isValid = true;
+                $('.required').each(function () {
+                    if ($(this).val() === '') {
+                        $(this).addClass('border-danger');
+                        isValid = false;
+                    } else {
+                        $(this).removeClass('border-danger');
+                    }
+                });
+                $('#single').each(function() {
+                    var select2SelectionElement = $(this).next('.select2').find('.select2-selection');
+
+                    if ($(this).val() === '') {
+                        select2SelectionElement.addClass('border-danger');
+                        isValid = false;
+                    } else {
+                        select2SelectionElement.removeClass('border-danger');
+                    }
+                });
+
+                if (isValid) {
+                    var form_data = $('#addCheckout').serialize();
+                //    showLoader();
+                    $.ajax({
+                        type: 'POST',
+                        url: "{{ route('add.checkout') }}",
+                        data: form_data,
+                        success: function (data) {
+                            // hideLoader();
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: 'Checkout  saved successfully.',
+                }).then((result) => {
+                    if (result.isConfirmed || result.isDismissed) {
+                        location.reload();
+                    }
+                });
+            },
+            error: function (error) {
+                // hideLoader();
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: 'There was an error saving the information. Please try again.',
+                });
+                console.error('There was a problem with the AJAX request:', error);
+            }
+                    });
+                }
+            });
+            $('.required').on('input', function () {
+            if ($(this).val() !== '') {
+                $(this).removeClass('border-danger');
+            } else {
+                $(this).addClass('border-danger');
+            }
+        });
+        $('#single').on('change', function() {
+            var select2SelectionElement = $(this).next('.select2').find('.select2-selection');
+            if ($(this).val() !== '') {
+                select2SelectionElement.removeClass('border-danger');
+            } else {
+                select2SelectionElement.addClass('border-danger');
+            }
+        });
+
+
+        });
+
+</script>
 @endsection
