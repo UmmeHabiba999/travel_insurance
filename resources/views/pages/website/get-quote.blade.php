@@ -188,6 +188,9 @@
         </div>
     </div>
     <div class="container">
+
+
+
         <div class="row">
             <div class="col-md-12">
                 <h1 class="text-center py-5">Choose the best plan for you</h1>
@@ -217,39 +220,42 @@
                                             <div class="border-dashed"></div>
                                             <div class="plans-benefits-title">
                                                 <h2>Trip Cancellation</h2>
-                                                <h3>100% of Trip Cost</h3>
+                                                <h3>{{ $platinumQuote->trip_cancallation}} of Trip Cost</h3>
                                             </div>
                                         </li>
                                         <li>
                                             <div class="border-dashed"></div>
                                             <div class="plans-benefits-title">
                                                 <h2>Trip Interruption</h2>
-                                                <h3>150% of Trip Cost</h3>
+                                                <h3>{{ $platinumQuote->trip_interuption}} of Trip Cost</h3>
                                             </div>
                                         </li>
                                         <li>
                                             <div class="border-dashed"></div>
                                             <div class="plans-benefits-title">
                                                 <h2>Emergency Accident and Sickness Medical Expense</h2>
-                                                <h3>$250,000</h3>
+                                                <h3>{{ $platinumQuote->medical_expenses}}</h3>
                                             </div>
                                         </li>
                                         <li>
                                             <div class="border-dashed"></div>
                                             <div class="plans-benefits-title">
                                                 <h2>Emergency Evacuation/Repatriation</h2>
-                                                <h3>$1,000,000</h3>
+                                                <h3>{{ $platinumQuote->emergency_evacuation}}</h3>
                                             </div>
                                         </li>
                                     </ul>
                                     <div>
-                                        <h2 class="text-center">$64.00</h2>
+                                        <h2 class="text-center">${{ $platinumQuote->price_after_discount_incl_tax}}</h2>
                                     </div>
                                     <center>
+
                                         <button class="btn btn-select-benefits" data-bs-toggle="modal"
-                                            data-bs-target="#adons-modal">
+                                            data-bs-target="#platinum-modal">
                                             Select
                                         </button>
+
+
                                     </center>
                                     <h5 class="more-benefits">
                                         See more Benefits
@@ -285,39 +291,42 @@
                                             <div class="border-dashed"></div>
                                             <div class="plans-benefits-title">
                                                 <h2>Trip Cancellation</h2>
-                                                <h3>100% of Trip Cost</h3>
+                                                <h3>{{ $goldQuote->trip_cancallation}} of Trip Cost</h3>
                                             </div>
                                         </li>
                                         <li>
                                             <div class="border-dashed"></div>
                                             <div class="plans-benefits-title">
                                                 <h2>Trip Interruption</h2>
-                                                <h3>150% of Trip Cost</h3>
+                                                <h3>{{ $goldQuote->trip_interuption}} of Trip Cost</h3>
                                             </div>
                                         </li>
                                         <li>
                                             <div class="border-dashed"></div>
                                             <div class="plans-benefits-title">
                                                 <h2>Emergency Accident and Sickness Medical Expense</h2>
-                                                <h3>$100,000</h3>
+                                                <h3>{{ $goldQuote->medical_expenses }}</h3>
                                             </div>
                                         </li>
                                         <li>
                                             <div class="border-dashed"></div>
                                             <div class="plans-benefits-title">
                                                 <h2>Emergency Evacuation/Repatriation</h2>
-                                                <h3>$500,000</h3>
+                                                <h3>{{ $goldQuote->emergency_evacuation }}</h3>
                                             </div>
                                         </li>
                                     </ul>
                                     <div>
-                                        <h2 class="text-center">$48.00</h2>
+                                        <h2 class="text-center">${{ $goldQuote->price_after_discount_incl_tax}}</h2>
                                     </div>
                                     <center>
+
                                         <button class="btn btn-select-benefits" data-bs-toggle="modal"
-                                            data-bs-target="#adons-modal">
+                                            data-bs-target="#gold-modal">
                                             Select
                                         </button>
+
+
                                     </center>
                                     <h5 class="more-benefits">
                                         See more Benefits
@@ -353,40 +362,43 @@
                                             <div class="border-dashed"></div>
                                             <div class="plans-benefits-title">
                                                 <h2>Trip Cancellation</h2>
-                                                <h3>100% of Trip Cost</h3>
+                                                <h3>{{ $silverQuote->trip_cancallation}} of Trip Cost</h3>
                                             </div>
                                         </li>
                                         <li>
                                             <div class="border-dashed"></div>
                                             <div class="plans-benefits-title">
                                                 <h2>Trip Interruption</h2>
-                                                <h3>150% of Trip Cost</h3>
+                                                <h3>{{ $silverQuote->trip_interuption}} of Trip Cost</h3>
                                             </div>
                                         </li>
                                         <li>
                                             <div class="border-dashed"></div>
                                             <div class="plans-benefits-title">
                                                 <h2>Emergency Accident and Sickness Medical Expense</h2>
-                                                <h3>$25,000</h3>
+                                                <h3>{{ $silverQuote->medical_expenses}}</h3>
                                             </div>
                                         </li>
                                         <li>
                                             <div class="border-dashed"></div>
                                             <div class="plans-benefits-title">
                                                 <h2>Emergency Evacuation/Repatriation</h2>
-                                                <h3>$1,000,000</h3>
+                                                <h3>{{ $silverQuote->emergency_evacuation}}</h3>
                                             </div>
                                         </li>
                                     </ul>
                                     <div>
-                                        <h2 class="text-center">$24.00</h2>
+                                        <h2 class="text-center">${{ $silverQuote->price_after_discount_incl_tax}}</h2>
                                     </div>
                                     <center>
+
                                         <a href="./checkoutpage.html">
                                             <button class="btn btn-select-benefits">
                                                 Select
                                             </button>
                                         </a>
+
+
                                     </center>
                                     <h5 class="more-benefits">
                                         See more Benefits
@@ -398,11 +410,13 @@
                 </div>
             </div>
         </div>
+
+
     </div>
 
 
-    <!-- Modal -->
-    <div class="modal fade" id="adons-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!--Modal -->
+    <div class="modal fade" id="platinum-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog  modal-xl  modal-dialog-centered">
             <div class="modal-content">
                 <div class="d-flex align-items-center justify-content-between border-0 px-4 py-4">
@@ -420,11 +434,11 @@
                                         <div class="col-md-12">
                                             <div class="Plans_boxPlans">
                                                 <center>
-                                                    <button class="btn btn-select-benefits text-white"
+                                                    {{-- <button class="btn btn-select-benefits text-white"
                                                         data-bs-toggle="modal" data-bs-target="#adons-modal"
                                                         style="background: #010090;">
                                                         Select
-                                                    </button>
+                                                    </button> --}}
                                                     <div class="Plans_planName__hK-eU">
                                                         <h1 class="text-center">Platinum. </h1>
                                                     </div>
@@ -479,6 +493,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="col-md-8">
                             <div class="d-flex align-items-center justify-content-between addon-div">
                                 <div>
@@ -492,9 +507,113 @@
                             <p></p>
                             <p></p>
                             <h5 class="text-center mb-0">$89.96</h5>
-                            <a href="./checkoutpage.html">
-                                <button type="button" class="btn continue-btn">COUNTINUE</button>
-                            </a>
+
+                            <a href="{{ url('/checkout?quote_name=' . $platinumQuote->name) }}" class="btn continue-btn">CONTINUE</a>
+
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="gold-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog  modal-xl  modal-dialog-centered">
+            <div class="modal-content">
+                <div class="d-flex align-items-center justify-content-between border-0 px-4 py-4">
+                    <p></p>
+                    <h5 class="modal-title" id="exampleModalLabel">Improve Your Travel by adding these optional benefits
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="card" style="border:2px solid #010090;">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="Plans_boxPlans">
+                                                <center>
+                                                    {{-- <button class="btn btn-select-benefits text-white"
+                                                        data-bs-toggle="modal" data-bs-target="#adons-modal"
+                                                        style="background: #010090;">
+                                                        Select
+                                                    </button> --}}
+                                                    <div class="Plans_planName__hK-eU">
+                                                        <h1 class="text-center">Platinum. </h1>
+                                                    </div>
+                                                    <h5 class="eligible text-center"><strong>Schengen Eligible</strong>
+                                                    </h5>
+                                                    <div class="description-link">
+                                                        <a href="https://zaasatspcmdpranc1sto.blob.core.windows.net/uploaded-documents/c485c7b1_6749_4370_a2f9_3e783d2ac58c.pdf?sv=2022-11-02&amp;se=2025-07-02T02%3A20%3A13Z&amp;sr=b&amp;sp=r&amp;sig=njJqz7xdwpz7sxflg8Trd7Z9cRnKz2DWmWpXUhj6yO8%3D"
+                                                            target="_blank" rel="noopener noreferrer">Coverage
+                                                            Description</a>
+                                                    </div>
+                                                    <button class="man-benift-btn">
+                                                        Main benefits
+                                                    </button>
+                                                </center>
+
+                                                <ul class="plans-benefits">
+                                                    <li>
+                                                        <div class="border-dashed"></div>
+                                                        <div class="plans-benefits-title">
+                                                            <h2>Trip Cancellation</h2>
+                                                            <h3>100% of Trip Cost</h3>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="border-dashed"></div>
+                                                        <div class="plans-benefits-title">
+                                                            <h2>Trip Interruption</h2>
+                                                            <h3>150% of Trip Cost</h3>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="border-dashed"></div>
+                                                        <div class="plans-benefits-title">
+                                                            <h2>Emergency Accident and Sickness Medical Expense</h2>
+                                                            <h3>$250,000</h3>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="border-dashed"></div>
+                                                        <div class="plans-benefits-title">
+                                                            <h2>Emergency Evacuation/Repatriation</h2>
+                                                            <h3>$1,000,000</h3>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                                <div>
+                                                    <h2 class="text-center">$64.00</h2>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-8">
+                            <div class="d-flex align-items-center justify-content-between addon-div">
+                                <div>
+                                    <h3>Rental Car Damage</h3>
+                                    <h5>$50,000</h5>
+                                </div>
+                                <img src="{{ asset('assets/images/add-icon.png') }}" width="60px" height="60px" alt="">
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-between py-4">
+                            <p></p>
+                            <p></p>
+                            <h5 class="text-center mb-0">$89.96</h5>
+
+                            <a href="{{ url('/checkout?quote_name=' . $goldQuote->name) }}" class="btn continue-btn">CONTINUE</a>
+
                         </div>
                     </div>
                 </div>

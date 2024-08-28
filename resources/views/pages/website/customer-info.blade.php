@@ -1,4 +1,3 @@
-
 @extends('layouts.website.website-default')
 @section('content')
 <style>
@@ -190,12 +189,12 @@
 
             <div class="col-md-7">
                 <h6 class="sm-heading mt-4">TRIP DESTINATION</h6>
-                <form id="addCheckout" method="POST" action="{{ route('create-policy') }}">
+                <form id="addCheckout" >
                     @csrf
                 <div class="Plans_boxPlans px-5 py-3">
                     <div>
                         <label class="checkout-form-label">Country *</label>
-                        <input name="country" type="text" class="checkout-input form-control required">
+                        <input name="country" type="text" class="checkout-input form-control required"  readonly>
 
 
                         {{-- <select name="country" class="checkout-input form-select">
@@ -256,13 +255,13 @@
                         </div>
                         <div class="col-md-6">
                             <label class="checkout-form-label">Age *</label>
-                            <input name="age" type="number"  class="checkout-input form-control">
+                            <input name="age" type="number"  class="checkout-input form-control" readonly>
                         </div>
 
                     </div>
                 </div>
             </div>
-            <div class="col-md-5">
+            {{-- <div class="col-md-5">
                 <div>
                     <h6 class="sm-heading mt-4">TRIP SUMMARY</h6>
                     <div class="Plans_boxPlans px-5 py-3">
@@ -364,13 +363,12 @@
                                 <h5 class="mb-0">TOTAL TO PAY</h5>
                                 <h3 class="mb-0">$24.00USD</h3>
                             </div>
-                            <input type="hidden" name="quote_name" value="{{ request()->query('quote_name') }}">
-                            <button class="btn btn-purchase mt-4" type="submit"  id="submitCheckout">COMPLETE PURCHASE</button>
+                            <button class="btn btn-purchase mt-4" type="button"  id="submitCheckout">COMPLETE PURCHASE</button>
 
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </form>
         </div>
     </div>
@@ -378,7 +376,7 @@
 </body>
 @endsection
 @section('insertjavascript')
-{{-- <script>
+<script>
     $(document).ready(function () {
 
         //handle chechboxes
@@ -416,7 +414,7 @@
                 //    showLoader();
                     $.ajax({
                         type: 'POST',
-                        url: "{{ route('create-policy') }}",
+                        url: "{{ route('add.checkout') }}",
                         data: form_data,
                         success: function (data) {
                             // hideLoader();
@@ -461,5 +459,5 @@
 
         });
 
-</script> --}}
+</script>
 @endsection

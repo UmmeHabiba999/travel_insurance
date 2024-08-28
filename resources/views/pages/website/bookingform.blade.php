@@ -6,7 +6,7 @@
             <div class="card">
                 <h5 class="card-header">Quote your Travel Insurance</h5>
                 <div class="card-body">
-                   <form id="addBooking">
+                   <form id="addBooking" method="POST" action="{{ route('add.booking') }}">
                         @csrf
                     <div class="row">
                         <div class="col-md-6">
@@ -68,10 +68,11 @@
                             <input type="number" name="age_of_travelers" class="form1-input required">
                         </div>
                         <div class="col-md-12">
-                            <button class="btn quote-now-btn mt-3"  type="button" id="submitBooking">GET A QUOTE NOW</button>
+                            <button class="btn quote-now-btn mt-3"  type="submit" id="submitBooking">GET A QUOTE NOW</button>
                         </div>
                     </div>
                 </form>
+                {{-- <a href="{{ route('get.quote')}}">Get Quote</a> --}}
                 </div>
             </div>
         </div>
@@ -79,7 +80,7 @@
 </div>
 @endsection
 @section('insertjavascript')
-<script>
+{{-- <script>
     $(document).ready(function () {
             $('#submitBooking').click(function () {
                 var isValid = true;
@@ -103,36 +104,36 @@
                     }
                 });
 
-                if (isValid) {
-                    var form_data = $('#addBooking').serialize();
-                //    showLoader();
-                    $.ajax({
-                        type: 'POST',
-                        url: "{{ route('add.booking') }}",
-                        data: form_data,
-                        success: function (data) {
-                            // hideLoader();
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Success!',
-                    text: 'Quote  saved successfully.',
-                }).then((result) => {
-                    if (result.isConfirmed || result.isDismissed) {
-                        location.reload();
-                    }
-                });
-            },
-            error: function (error) {
-                // hideLoader();
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error!',
-                    text: 'There was an error saving the information. Please try again.',
-                });
-                console.error('There was a problem with the AJAX request:', error);
-            }
-                    });
-                }
+            //     if (isValid) {
+            //         var form_data = $('#addBooking').serialize();
+            //     //    showLoader();
+            //         $.ajax({
+            //             type: 'POST',
+            //             url: "{{ route('add.booking') }}",
+            //             data: form_data,
+            //             success: function (data) {
+            //                 // hideLoader();
+            //     Swal.fire({
+            //         icon: 'success',
+            //         title: 'Success!',
+            //         text: 'Quote  saved successfully.',
+            //     }).then((result) => {
+            //         if (result.isConfirmed || result.isDismissed) {
+            //             location.reload();
+            //         }
+            //     });
+            // },
+            // error: function (error) {
+            //     // hideLoader();
+            //     Swal.fire({
+            //         icon: 'error',
+            //         title: 'Error!',
+            //         text: 'There was an error saving the information. Please try again.',
+            //     });
+            //     console.error('There was a problem with the AJAX request:', error);
+            // }
+            //         });
+            //     }
             });
             $('.required').on('input', function () {
             if ($(this).val() !== '') {
@@ -152,5 +153,5 @@
 
         });
 
-</script>
+</script> --}}
 @endsection
