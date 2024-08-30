@@ -339,13 +339,13 @@
                                     <input name="payment_country" type="text"
                                         class="checkout-input form-control" required>
                                 </div>
-                                <div>
+                                {{-- <div>
                                     <label class="checkout-form-label text-white mt-3">State of Residence *</label>
                                     <select name="payment_state_of_residence" id="single"
                                         class="checkout-input form-select" required>
                                         <option value=""></option>
                                     </select>
-                                </div>
+                                </div> --}}
                                 <div class="d-flex align-items-center gap-2 mt-4">
                                     <input name="billing_address" type="checkbox" class="checkout-input"
                                         style="width: 3%">

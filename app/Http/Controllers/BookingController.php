@@ -29,7 +29,7 @@ class BookingController extends Controller
                 'return_date' => 'required|date|after_or_equal:departure_date',
                 'first_deposit_date' => 'required|date',
                 'total_trip_cost' => 'required|numeric|min:0',
-                'number_of_travelers' => 'required|integer|min:1',
+                // 'number_of_travelers' => 'required|integer|min:1',
                 // 'age_of_travelers' => 'required',
                 'adults' => 'required|nullable',
                 'children' => 'required|nullable',
@@ -40,6 +40,7 @@ class BookingController extends Controller
             if ($validator->fails()) {
                 return redirect()->back()->withErrors($validator)->withInput();
             }
+
             $booking = new Booking();
             $booking->state_of_residence = $request->state_of_residence;
             $booking->destination_country = $request->destination_country;
@@ -50,7 +51,9 @@ class BookingController extends Controller
 
             $booking->save();
 
-            dd($booking);
+            // dd($request->ages);
+
+            // dd($booking);
 
             // $booking = Booking::create($request->all());
 
