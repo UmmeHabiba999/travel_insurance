@@ -25,8 +25,8 @@ class BookingController extends Controller
             $validator = Validator::make($request->all(), [
                 'state_of_residence' => 'required|string|max:255',
                 'destination_country' => 'required|string|max:255',
-                'departure_date' => 'required|date|after_or_equal:today',
-                'return_date' => 'required|date|after_or_equal:departure_date',
+                // 'departure_date' => 'required|date|after_or_equal:today',
+                // 'return_date' => 'required|date|after_or_equal:departure_date',
                 'first_deposit_date' => 'required|date',
                 'total_trip_cost' => 'required|numeric|min:0',
                 // 'number_of_travelers' => 'required|integer|min:1',
@@ -51,6 +51,8 @@ class BookingController extends Controller
 
             $booking->save();
 
+            // dd( $request->departure_date);
+
             // dd($request->ages);
 
             // dd($booking);
@@ -74,18 +76,18 @@ class BookingController extends Controller
                     ],
                     "travel" => [
                         "travelers" => [
-                            "adults" => 1,
-                            "children" => 0,
-                            "infants" => 0,
+                            "adults" => $request->adults,
+                            "children" => $request->children,
+                            "infants" => $request->infants,
                             "travelers_ages" => [34]
 
                         ],
-                        "destination_country" => "ES",
-                        "origin_state" => "IL",
-                        "cost" => 1500,
-                        "booking_date" => "2024-07-17",
-                        "end_date" => "2024-12-04",
-                        "start_date" => "2024-12-03"
+                        "destination_country" => $request->destination_country,
+                        "origin_state" =>  $request->state_of_residence,
+                        "cost" => $request->total_trip_cost,
+                        "booking_date" => $request->first_deposit_date,
+                        "end_date" => $request->return_date,
+                        "start_date" =>  $request->departure_date
 
                     ]
                 ];

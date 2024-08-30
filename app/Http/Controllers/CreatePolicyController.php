@@ -221,6 +221,7 @@ class CreatePolicyController extends Controller
                                     if ($finalizeResponse->successful()) {
                                         $policy->is_payment_successful = true;
                                         $policy->save();
+                                        // dd($policy);
 
                                         // return response()->json(['message' => 'Policy and payment created successfully!']);
                                         return redirect('/booking')->with('success', 'Policy and payment created successfully!');
