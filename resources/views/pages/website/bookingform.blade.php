@@ -1,7 +1,13 @@
 @extends('layouts.website.website-default')
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+<link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
 @section('content')
 <div class="container">
-    <div class="row">
+    <div class="row mt-3">
         <div class="col-md-6">
             <div class="card">
                 <h5 class="card-header">Quote your Travel Insurance</h5>
@@ -11,13 +17,16 @@
                     <div class="row">
                         <div class="col-md-6">
                             <label class="form-label">State of Residence*</label>
-                            <select name="state_of_residence" id="single" class="js-states form-control form1-input required">
+
+                            <select name="state_of_residence" id="single"  class="js-states form-control form1-input" required>
+                                <option value="" disabled selected>Select your state</option>
                                 <option value=""></option>
                             </select>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Destination Country*</label>
-                            <select name="destination_country" id="countries" class="js-states form-control form1-input required">
+                            <select name="destination_country" id="countries" class="js-states form-control form1-input" required>
+                                <option value="" disabled selected>Select Destination Country</option>
                                 <option value=""></option>
                             </select>
                         </div>
@@ -26,31 +35,31 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <label class="form-label-sm">Departure Date</label>
-                                    <input type="date" name="departure_date" class="form1-input required">
+                                    <input type="date" name="departure_date" class="form1-input" required>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label-sm">Return Date</label>
-                                    <input type="date" name="return_date" class="form1-input required">
+                                    <input type="date" name="return_date" class="form1-input" required>
                                 </div>
                             </div>
                         </div>
 
 
                         <div class="col-md-6">
-                            <label class="form-label">First Deposit Date*</label>
-                            <input type="date" name="first_deposit_date" class="form1-input required">
+                            <label class="form-label">Booking Date*</label>
+                            <input type="date" name="first_deposit_date" class="form1-input" required>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Total Trip Cost*</label>
                             <div class="d-flex position-relative">
                                 <img src="{{ asset('assets/images/dollar-currency-sign.png') }}" width="30px" height="30px" alt=""
                                     class="position-absolute" style="z-index: 12; top:15px;left: 10px;">
-                                <input type="number" name="total_trip_cost" class="form1-input ps-5 required">
+                                <input type="text" name="total_trip_cost" class="form1-input ps-5" required>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        {{-- <div class="col-md-6">
                             <label class="form-label">Number of Travelers*</label>
-                            <select name="number_of_travelers" id="" class="form1-input form-select required">
+                            <select name="number_of_travelers" id="" class="form1-input form-select" required>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
@@ -62,17 +71,40 @@
                                 <option value="9">9</option>
                                 <option value="10">10</option>
                             </select>
+                        </div> --}}
+                        <div class="col-md-6">
+                            <label class="form-label">Number of Adults*</label>
+                            <input type="text" name="adults" class="form1-input" required>
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label">Age of Travelers*</label>
-                            <input type="number" name="age_of_travelers" class="form1-input required">
+                            <label class="form-label">Number of Children*</label>
+                            <input type="text" name="children" class="form1-input" required>
                         </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Number of Infants*</label>
+                            <input type="text" name="infants" class="form1-input" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Age of Travelers*</label>
+                            {{-- <input type="text" name="ages[]"  class="form1-input" required multiple> --}}
+
+                            <select name="ages[]" id="age-select" class="form1-input" required multiple>
+                                <option value="18">18</option>
+                                <option value="19">19</option>
+                                <option value="20">20</option>
+                                <option value="21">21</option>
+                                <option value="22">22</option>
+
+                            </select>
+                        </div>
+
                         <div class="col-md-12">
                             <button class="btn quote-now-btn mt-3"  type="submit" id="submitBooking">GET A QUOTE NOW</button>
                         </div>
                     </div>
                 </form>
-                {{-- <a href="{{ route('get.quote')}}">Get Quote</a> --}}
+
                 </div>
             </div>
         </div>
@@ -80,78 +112,43 @@
 </div>
 @endsection
 @section('insertjavascript')
-{{-- <script>
-    $(document).ready(function () {
-            $('#submitBooking').click(function () {
-                var isValid = true;
-                $('.required').each(function () {
-                    if ($(this).val() === '') {
-                        $(this).addClass('border-danger');
-                        isValid = false;
-                    } else {
-                        $(this).removeClass('border-danger');
-                    }
-                });
 
-                $('#single, #countries').each(function() {
-                    var select2SelectionElement = $(this).next('.select2').find('.select2-selection');
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{{ asset('js/booking.js') }}"></script>
 
-                    if ($(this).val() === '') {
-                        select2SelectionElement.addClass('border-danger');
-                        isValid = false;
-                    } else {
-                        select2SelectionElement.removeClass('border-danger');
-                    }
-                });
+<script>
+    $(document).ready(function() {
+        $('#age-select').select2({
+            placeholder: "Select ages",
+            allowClear: true
+        });
+    });
+</script>
 
-            //     if (isValid) {
-            //         var form_data = $('#addBooking').serialize();
-            //     //    showLoader();
-            //         $.ajax({
-            //             type: 'POST',
-            //             url: "{{ route('add.booking') }}",
-            //             data: form_data,
-            //             success: function (data) {
-            //                 // hideLoader();
-            //     Swal.fire({
-            //         icon: 'success',
-            //         title: 'Success!',
-            //         text: 'Quote  saved successfully.',
-            //     }).then((result) => {
-            //         if (result.isConfirmed || result.isDismissed) {
-            //             location.reload();
-            //         }
-            //     });
-            // },
-            // error: function (error) {
-            //     // hideLoader();
-            //     Swal.fire({
-            //         icon: 'error',
-            //         title: 'Error!',
-            //         text: 'There was an error saving the information. Please try again.',
-            //     });
-            //     console.error('There was a problem with the AJAX request:', error);
-            // }
-            //         });
-            //     }
+<script>
+    $(document).ready(function() {
+
+        @if(session('success'))
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: '{{ session('success') }}',
             });
-            $('.required').on('input', function () {
-            if ($(this).val() !== '') {
-                $(this).removeClass('border-danger');
-            } else {
-                $(this).addClass('border-danger');
-            }
-        });
-        $('#single, #countries').on('change', function() {
-            var select2SelectionElement = $(this).next('.select2').find('.select2-selection');
-            if ($(this).val() !== '') {
-                select2SelectionElement.removeClass('border-danger');
-            } else {
-                select2SelectionElement.addClass('border-danger');
-            }
-        });
+        @endif
 
-        });
 
-</script> --}}
+        @if(session('error'))
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: '{{ session('error') }}',
+            });
+        @endif
+    });
+</script>
+
+
 @endsection

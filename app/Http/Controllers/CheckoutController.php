@@ -40,7 +40,7 @@ class CheckoutController extends Controller
                     'full_name' => 'required|string|max:255',
                     'card_number' => 'required|numeric',
                     'expiration_date' => 'required|date',
-                    'cvc' => 'required|numeric',
+                    'cvc' => 'required|numeric|max:3',
                     'payment_address' => 'required|string|max:255',
                     'payment_city' => 'required|string|max:255',
                     'payment_zip_code' => 'required|numeric',
@@ -52,8 +52,6 @@ class CheckoutController extends Controller
                 if ($validator->fails()) {
                     return response()->json(['errors' => $validator->errors()], 422);
                 }
-
-
 
                 $payment = Payment::create($request->all());
                 $travelerInfo = TravelerInfo::create($request->all());

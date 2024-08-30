@@ -19,8 +19,13 @@ return new class extends Migration
             $table->date('return_date');
             $table->date('first_deposit_date');
             $table->integer('total_trip_cost');
-            $table->integer('number_of_travelers');
-            $table->integer('age_of_travelers');
+            // $table->integer('number_of_travelers');
+            // $table->string('age_of_travelers')->nullable();
+            // $table->string('adults')->nullable();
+            // $table->string('children')->nullable();
+            // $table->string('infants')->nullable();
+
+
             $table->timestamps();
         });
     }

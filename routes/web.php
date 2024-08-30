@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\CreatePolicyController;
+use Illuminate\Http\Request;
+use App\Models\CreateQuotes;
+use App\Models\Booking;
 
 Route::get('/booking', function () {
 
@@ -24,9 +27,13 @@ Route::get('/get-quote', function () {
 
 });
 
-Route::get('/checkout', function () {
+Route::get('/checkout', function (Request $request) {
 
-    return view('pages.website.checkout');
+    $quoteName = $request->query('quote_name');
+    $createQuotes = CreateQuotes::where('name', $quoteName)->first();
+    $booking_id = $createQuotes->booking_id;
+    $booking = Booking::where('id', $booking_id)->first();
+    return view('pages.website.checkout', compact('booking', 'createQuotes'));
 
 });
 
@@ -41,3 +48,8 @@ Route::post('/create-policy', [CreatePolicyController::class, 'createPolicy'])->
 
 // Route::get('/quotes', [BookingController::class, 'getTravelQuote'])->name('get.quote');
 
+// Route::get('/', function () {
+
+//     return view('pages.website.checkout');
+
+// });

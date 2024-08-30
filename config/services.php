@@ -35,4 +35,8 @@ return [
         ],
     ],
 
+    'axa' => [
+        'bearer_token' => env('AXA_BEARER_TOKEN'),
+    ],
+
 ];
