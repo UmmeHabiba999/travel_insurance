@@ -10,6 +10,7 @@ use App\Http\Traits\UploadFilesTraits;
 use App\Models\User;
 use App\Models\Booking;
 use App\Models\CreateQuotes;
+use Illuminate\Support\Facades\Session;
 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Http;
@@ -51,7 +52,7 @@ class BookingController extends Controller
 
             $booking->save();
 
-            // dd( $request->departure_date);
+            // dd( $request->return_date);
 
             // dd($request->ages);
 
@@ -83,11 +84,11 @@ class BookingController extends Controller
 
                         ],
                         "destination_country" => $request->destination_country,
-                        "origin_state" =>  $request->state_of_residence,
+                        "origin_state" => $request->state_of_residence,
                         "cost" => $request->total_trip_cost,
                         "booking_date" => $request->first_deposit_date,
                         "end_date" => $request->return_date,
-                        "start_date" =>  $request->departure_date
+                        "start_date" => $request->departure_date
 
                     ]
                 ];
@@ -145,10 +146,8 @@ class BookingController extends Controller
 
                     return view('pages.website.get-quote', compact('goldQuote', 'silverQuote', 'platinumQuote'))->with('success', 'Booking saved and quote retrieved successfully.');
                 } else {
-                    return response()->json([
-                        'error' => 'Failed to create policy',
-                        'message' => $response->body()
-                    ], $response->status());
+                    Session::flash('error', 'Failed to create policy: ' . $response->body());
+                    return redirect('/booking');
                 }
             } else {
                 return redirect()->back()->with('error', 'Failed to add data');

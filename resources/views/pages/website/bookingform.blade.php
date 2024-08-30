@@ -33,13 +33,53 @@ integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLAS
                         <div class="col-md-12">
                             <label class="form-label">Travel Date*</label>
                             <div class="row">
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
                                     <label class="form-label-sm">Departure Date</label>
                                     <input type="date" name="departure_date" class="form1-input" required>
-                                </div>
+                                </div> --}}
+
                                 <div class="col-md-6">
+                                    <label class="form-label-sm">Departure Date</label>
+                                    <input
+                                        type="date"
+                                        name="departure_date"
+                                        class="form1-input"
+                                        id="departure-date"
+                                        required
+                                    >
+                                    <small id="date-message" style="color: red; display: none;">Please select a date at least 6 months from today.</small>
+                                </div>
+
+
+                                {{-- <div class="col-md-6">
+                                    <label class="form-label-sm">Departure Date</label>
+                                    <input
+                                        type="date"
+                                        name="departure_date"
+                                        class="form1-input"
+                                        required
+                                        id="departure-date"
+                                    >
+                                </div> --}}
+
+
+                                {{-- <div class="col-md-6">
                                     <label class="form-label-sm">Return Date</label>
                                     <input type="date" name="return_date" class="form1-input" required>
+                                </div> --}}
+
+                                <div class="col-md-6">
+                                    <label class="form-label-sm">Return Date</label>
+                                    <input
+                                        type="date"
+                                        name="return_date"
+                                        class="form1-input"
+                                        id="return-date"
+                                        required
+                                    >
+                                    <small id="return-date-message" style="color: red; display: none;">
+                                        Return Date cannot be earlier than Departure Date.
+                                    </small>
                                 </div>
                             </div>
                         </div>
@@ -127,6 +167,10 @@ integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLAS
         });
     });
 </script>
+
+
+
+
 
 <script>
     $(document).ready(function() {
