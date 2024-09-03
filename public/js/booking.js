@@ -351,20 +351,22 @@ const countries = [
     { summaryLabel: "Zimbabwe", label: "Zimbabwe", value: "ZW" }
 ];
 
-const countriesSelector = document.getElementById('countries');
+const countriesSelector = document.querySelectorAll('.countries');
 
-countries.forEach(countries => {
+countries.forEach(country => {
     const option = document.createElement('option');
-    option.value = countries.value;
-    option.textContent = countries.label;
-    countriesSelector.appendChild(option);
-});
+    option.value = country.value;
+    option.textContent = country.label;
 
-$(document).ready(function () {
-    $("#countries").select2({
-        placeholder: "Select a Countries",
-        allowClear: true
+    // Append option to all elements with the class 'countries'
+    countriesSelector.forEach(selector => {
+        selector.appendChild(option.cloneNode(true));
     });
 });
 
-
+$(document).ready(function () {
+    $(".countries").select2({
+        placeholder: "Select a Country",
+        allowClear: true
+    });
+});

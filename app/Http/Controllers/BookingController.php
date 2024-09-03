@@ -1,15 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Traits\ResponseTraits;
-use App\Http\Traits\UploadFilesTraits;
-use App\Models\User;
 use App\Models\Booking;
 use App\Models\CreateQuotes;
+use App\Models\GenerateToken;
 use Illuminate\Support\Facades\Session;
 
 use Illuminate\Support\Facades\Validator;
@@ -17,7 +14,7 @@ use Illuminate\Support\Facades\Http;
 
 class BookingController extends Controller
 {
-    use ResponseTraits;
+    
     public function AddBooking(Request $request)
     {
 
@@ -52,13 +49,12 @@ class BookingController extends Controller
 
             $booking->save();
 
-            // dd( $request->return_date);
+            //bearer token
+            $token =  GenerateToken::where('id', 1)->first();
+            $bearerToken = $token->token;
 
-            // dd($request->ages);
-
-            // dd($booking);
-
-            // $booking = Booking::create($request->all());
+            $ages = $request->ages;
+            $travelers_ages = is_array($ages) ? array_map('intval', $ages) : [(int) $ages];
 
             if ($booking) {
 
@@ -80,7 +76,7 @@ class BookingController extends Controller
                             "adults" => $request->adults,
                             "children" => $request->children,
                             "infants" => $request->infants,
-                            "travelers_ages" => [34]
+                            "travelers_ages" => $travelers_ages
 
                         ],
                         "destination_country" => $request->destination_country,
@@ -94,7 +90,7 @@ class BookingController extends Controller
                 ];
 
 
-                $bearerToken = config('services.axa.bearer_token');
+                // $bearerToken = config('services.axa.bearer_token');
 
                 $url = 'https://api-test.axa-assistance.com/sales/v2/individual/travel/quotes_requests';
                 $headers = [
@@ -113,7 +109,13 @@ class BookingController extends Controller
                     foreach ($responseData['products'] as $product) {
                         $name = $product['name'];
                         $quote_code = $product['quote_code'];
-                        $consent = $product['consents'][2]['code'];
+
+                        if (strpos($name, 'Gold') !== false) {
+                            $consent = $product['consents'][1]['code'];
+                        } else {
+                            $consent = $product['consents'][2]['code'];
+                        }
+
                         $price_after_discount = $product['prices']['price_after_discount_incl_tax'];
                         $premium_after_discount = $product['prices']['premium_after_discount_excl_tax'];
                         $content_url = $product['attachments'][0]['content_url'];
@@ -121,7 +123,6 @@ class BookingController extends Controller
                         $trip_interruption = $product['guarantees'][1]['limit'];
                         $medical_expenses = $product['guarantees'][2]['limit'];
                         $emergency_evacuation = $product['guarantees'][3]['limit'];
-
 
                         $createQuote = CreateQuotes::create([
                             'booking_id' => $booking->id,
@@ -136,18 +137,26 @@ class BookingController extends Controller
                             'medical_expenses' => $medical_expenses,
                             'emergency_evacuation' => $emergency_evacuation,
                         ]);
-
                     }
 
-
-                    $goldQuote = CreateQuotes::where('booking_id', $booking->id)->where('name', 'Gold')->first();
-                    $silverQuote = CreateQuotes::where('booking_id', $booking->id)->where('name', 'Silver')->first();
-                    $platinumQuote = CreateQuotes::where('booking_id', $booking->id)->where('name', 'Platinum')->first();
-
+                    $goldQuote = CreateQuotes::where('booking_id', $booking->id)
+                        ->where('name', 'like', '%Gold%')
+                        ->first();
+                    $silverQuote = CreateQuotes::where('booking_id', $booking->id)->where('name', 'like', '%Silver%')
+                        ->first();
+                    $platinumQuote = CreateQuotes::where('booking_id', $booking->id)->where('name', 'like', '%Platinum%')
+                        ->first();
                     return view('pages.website.get-quote', compact('goldQuote', 'silverQuote', 'platinumQuote'))->with('success', 'Booking saved and quote retrieved successfully.');
                 } else {
-                    Session::flash('error', 'Failed to create policy: ' . $response->body());
+                    // Session::flash('error', 'Failed to create policy: ' . $response->body());
+                    // return redirect('/booking');
+                    $responseBody = $response->body();
+                    $responseData = json_decode($responseBody, true);
+                    $errorMessage = isset($responseData['error']) ? $responseData['error'] : 'Unknown error';
+
+                    Session::flash('error', 'Failed to create policy: ' . $errorMessage);
                     return redirect('/booking');
+
                 }
             } else {
                 return redirect()->back()->with('error', 'Failed to add data');
@@ -157,5 +166,34 @@ class BookingController extends Controller
         }
     }
 
+    public function generateToken()
+    {
 
+        $url = 'https://auth-stg.api.axapartners.com/oauth/token';
+
+        $data = [
+            'grant_type' => 'client_credentials',
+            'client_id' => 'PIQbb3tOoTo19cUpgyMLjv1Dvh6m51RF',
+            'client_secret' => 'aYtPT1oMA2SfP17LEc3JFm-lR0nAC1mesF7CNTDcKl6A6-Pw-4xHTVtozwxak-eU',
+        ];
+
+        $curl = curl_init($url);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, [
+            'Content-Type: application/x-www-form-urlencoded',
+            'Cookie: __cf_bm=f30udCiO6LN0xU16iNKyKseB1BWnDUUCi3EhaAR0ztM-1725013758-1.0.1.1-87sEPzqcpQa71z5rV8PYw2c.egw_eo0sLUmM0MjQmKPN01jffZEGA72gurzecTVr; did=s%3Av0%3Ad86fb33f-8ff0-4981-ae96-36817f90f35a.o9lXj0r2LfT%2BjEiNqTujXji7911PqEdZaY%2FV3YEIfEw; did_compat=s%3Av0%3Ad86fb33f-8ff0-4981-ae96-36817f90f35a.o9lXj0r2LfT%2BjEiNqTujXji7911PqEdZaY%2FV3YEIfEw',
+        ]);
+        curl_setopt($curl, CURLOPT_POST, true);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
+
+        $response = curl_exec($curl);
+        curl_close($curl);
+
+        $response = json_decode($response, true);
+
+        GenerateToken::updateOrCreate(
+            ['id' => 1],
+            ['token' => $response['access_token']]
+        );
+    }
 }

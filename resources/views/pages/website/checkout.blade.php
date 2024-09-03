@@ -189,15 +189,17 @@
                 </div>
 
                 <div class="col-md-7">
-                    <h6 class="sm-heading mt-4">TRIP DESTINATION</h6>
+                    {{-- <h6 class="sm-heading mt-4">TRIP DESTINATION</h6> --}}
                     <form id="addCheckout" method="POST" action="{{ route('create-policy') }}">
                         @csrf
-                        <div class="Plans_boxPlans px-5 py-3">
+                        {{-- <div class="Plans_boxPlans px-5 py-3">
                             <div>
                                 <label class="checkout-form-label">Country *</label>
-                                <input name="country" type="text" class="checkout-input form-control" required>
+                                <input name="country" type="text" class="checkout-input form-control" id="countries" required>
+
+
                             </div>
-                        </div>
+                        </div> --}}
 
                         <h6 class="sm-heading mt-4">TRAVELER 1 (POLICY HOLDER)</h6>
                         <div class="Plans_boxPlans px-5 py-3">
@@ -230,8 +232,8 @@
 
                             <div>
                                 <label class="checkout-form-label">State of Residence *</label>
-                                <input name="state_of_residence" type="text"
-                                    class="checkout-input form-control" required>
+                                <input name="state_of_residence" type="text" class="checkout-input form-control"
+                                    required>
                             </div>
                             <div>
                                 <label class="checkout-form-label">Phone Number *</label>
@@ -241,11 +243,11 @@
                                 <label class="checkout-form-label">Email *</label>
                                 <input name="email" type="email" class="checkout-input form-control" required>
                             </div>
-                            <div>
+                            {{-- <div>
                                 <label class="checkout-form-label">Email Confirmation *</label>
-                                <input name="email_confirmation" type="email"
-                                    class="checkout-input form-control" required>
-                            </div>
+                                <input name="email_confirmation" type="email" class="checkout-input form-control"
+                                    required>
+                            </div> --}}
                             <div class="row">
                                 <div class="col-md-6">
                                     <label class="checkout-form-label">Birth Date *</label>
@@ -304,41 +306,63 @@
                                 <div>
                                     <label class="checkout-form-label text-white mt-3">Card Number *</label>
                                     <input name="card_number" id="card_number" type="text"
-                                        class="checkout-input form-control" required
-                                        maxlength="16">
+                                        class="checkout-input form-control" required maxlength="16">
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label class="checkout-form-label text-white mt-3">Expiration Date *</label>
-                                        <input name="expiration_date" type="date"
-                                            class="checkout-input form-control" required>
+                                        <input name="expiration_date" type="date" class="checkout-input form-control"
+                                            required id="expirationDate">
                                     </div>
+
                                     <div class="col-md-6">
                                         <label class="checkout-form-label text-white mt-3">CVC *</label>
                                         <input name="cvc" type="text" class="checkout-input form-control" required
                                             maxlength="3">
                                     </div>
                                 </div>
+                                <div>
+                                    <label class="checkout-form-label text-white mt-3">Payment Type *</label>
+                                    <select name="payment_type" class="checkout-input form-control" required>
+                                        <option value="">Select a payment type</option>
+                                        <option value="CREDIT_CARD" selected>CREDIT CARD</option>
+                                        <option value="DEBIT_CARD">DEBIT CARD</option>
+                                        <option value="ELECTRONIC_TRANSFERT">ELECTRONIC TRANSFERT</option>
+                                        <option value="VIRTUAL_CREDIT_CARD">VIRTUAL CREDIT CARD</option>
+                                    </select>
+                                </div>
+
                                 {{-- <div>
-                                    <label class="checkout-form-label text-white mt-3">Address *</label>
-                                    <input name="payment_address" type="text"
-                                        class="checkout-input form-control" required>
-                                </div> --}}
-                                {{-- <div>
-                                    <label class="checkout-form-label text-white mt-3">City *</label>
-                                    <input name="payment_city" type="text"
+                                    <label class="checkout-form-label text-white mt-3">Currency *</label>
+                                    <input name="currency" type="text"
                                         class="checkout-input form-control required">
                                 </div> --}}
+                                <div>
+                                    <label class="checkout-form-label text-white mt-3">Currency *</label>
+                                    <select name="currency" class="checkout-input form-control" required>
+                                        <option value="" disabled selected>Select a currency</option>
+                                        <option value="USD" selected>USD</option>
+                                        <option value="EUR">EUR</option>
+                                        <option value="GBP">GBP</option>
+                                        <option value="JPY">JPY</option>
+                                        <option value="AUD">AUD</option>
+                                        <option value="CAD">CAD</option>
+                                        <option value="CHF">CHF</option>
+                                        <option value="CNY">CNY</option>
+                                        <option value="INR">INR</option>
+                                    </select>
+                                </div>
+
                                 {{-- <div>
                                     <label class="checkout-form-label text-white mt-3">Zip Code *</label>
                                     <input name="payment_zip_code" type="text"
                                         class="checkout-input form-control required">
                                 </div> --}}
-                                <div>
+                                {{-- <div>
                                     <label class="checkout-form-label text-white mt-3">Country *</label>
-                                    <input name="payment_country" type="text"
-                                        class="checkout-input form-control" required>
-                                </div>
+                                    <input name="payment_country" type="text" class="checkout-input form-control"
+                                        required>
+                                </div> --}}
                                 {{-- <div>
                                     <label class="checkout-form-label text-white mt-3">State of Residence *</label>
                                     <select name="payment_state_of_residence" id="single"
@@ -346,22 +370,22 @@
                                         <option value=""></option>
                                     </select>
                                 </div> --}}
-                                <div class="d-flex align-items-center gap-2 mt-4">
+                                {{-- <div class="d-flex align-items-center gap-2 mt-4">
                                     <input name="billing_address" type="checkbox" class="checkout-input"
                                         style="width: 3%">
                                     <p class="text-white mb-0">Please, uncheck this box if billing address is not the same
                                         as
                                         policy holder address</p>
-                                </div>
+                                </div> --}}
 
-                                <div class="d-flex align-items-center gap-2">
+                                {{-- <div class="d-flex align-items-center gap-2">
                                     <input name="promotional_info" type="checkbox" class="checkout-input "
                                         style="width: 3%">
                                     <p class="text-white mb-0"> Yes, I would like to receive promotional information
                                         occasionally</p>
-                                </div>
+                                </div> --}}
 
-                                <div class="d-flex gap-2">
+                                <div class="d-flex gap-2 mt-3">
                                     <input name="terms_conditions" type="checkbox" class="checkout-input"
                                         style="width: 3%" required>
                                     <p class="text-white mb-0" style="width: 97%;">By checking here you agree to our Terms
@@ -389,20 +413,18 @@
 @endsection
 @section('insertjavascript')
 
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
 
-
+    <script>
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('expirationDate').setAttribute('min', today);
+    </script>
 
     {{-- <script>
-    $(document).ready(function() {
-        @if (session('error'))
-            Swal.fire({
-                icon: 'error',
-                title: 'Error!',
-                text: '{{ session('error') }}',
+        $.getJSON('{{ asset('json/countries.json') }}', function(data) {
+                $.each(data, function(key, entry) {
+                    $('.countries').append(new Option(entry.name, entry.code));
+                });
             });
-        @endif
-    });
-</script> --}}
+    </script> --}}
+
 @endsection

@@ -13,6 +13,8 @@ use App\Models\TravelerInfo;
 use App\Models\Payment;
 use Illuminate\Validation\Rule;
 use App\Models\Policies;
+use Illuminate\Support\Facades\Session;
+use App\Models\GenerateToken;
 use DateTime;
 
 
@@ -48,12 +50,6 @@ class CreatePolicyController extends Controller
 
         ]);
 
-        // if ($validator->fails()) {
-        //     return response()->json([
-        //         'errors' => $validator->errors()->all(),
-        //     ], 422);
-        // }
-
 
         // Extract Month and Year from date to use in API Request
         $dateString = $request->expiration_date;
@@ -62,17 +58,13 @@ class CreatePolicyController extends Controller
         $year = $date->format('Y');
 
         // bearer token
+        $token =  GenerateToken::where('id', 1)->first();
+            $bearerToken = $token->token;
 
-        $bearerToken = config('services.axa.bearer_token');
+        // $bearerToken = config('services.axa.bearer_token');
 
         $quoteName = $request->input('quote_name');
         $quote = CreateQuotes::where('name', $quoteName)->first();
-
-        if ($quote->name == 'Gold') {
-            $consent = 'DISCLAIMER_UW7xqWfYb';
-        } else {
-            $consent = $quote->consent;
-        }
 
         $data = [
             'quote_code' => $quote->quote_code,
@@ -100,7 +92,7 @@ class CreatePolicyController extends Controller
             ],
             'consents' => [
                 [
-                    'code' => $consent,
+                    'code' => $quote->consent,
                     'is_confirmed' => true
                 ]
             ]
@@ -122,6 +114,8 @@ class CreatePolicyController extends Controller
             $responseData = $response->json();
 
             $policy_id = $responseData['policy_id'] ?? null;
+
+            // dd($policy_id);
 
             if ($policy_id) {
 
@@ -151,6 +145,7 @@ class CreatePolicyController extends Controller
                 $paymentUrl = "https://api-test.axa-assistance.com/specific/neo/travel/v1/policies/{$policy_id}/payments";
                 $paymentResponse = Http::withHeaders($headers)->post($paymentUrl, $paymentData);
 
+                // dd($paymentResponse );
                 if ($paymentResponse->successful()) {
                     $paymentResponseData = $paymentResponse->json();
                     $paymentJsToken = $paymentResponseData['payment_technical_information']['ixopay_access']['payment_js_token'] ?? null;
@@ -163,7 +158,7 @@ class CreatePolicyController extends Controller
                                 'cardHolder' => $request->full_name,
                                 'month' => $month,
                                 'year' => $year,
-                                'pan' => $request->card_number,
+                                'pan' => '4242424242424242',
                                 'cvv' => $request->cvc,
                             ]);
 
@@ -221,33 +216,51 @@ class CreatePolicyController extends Controller
                                     if ($finalizeResponse->successful()) {
                                         $policy->is_payment_successful = true;
                                         $policy->save();
-                                        // dd($policy);
 
-                                        // return response()->json(['message' => 'Policy and payment created successfully!']);
+                                        // dd($finalizeResponse);
+
                                         return redirect('/booking')->with('success', 'Policy and payment created successfully!');
                                     } else {
-                                        return response()->json($finalizeResponse->getBody()->getContents(), 500);
+                                        return response()->json([
+                                            'errors' => ['Failed to create policy: Policy ID not returned.'],
+                                        ], 500);
+
                                     }
                                 } else {
-                                    return response()->json($finalPaymentResponse->getBody()->getContents(), 500);
+                                    // return response()->json($finalPaymentResponse->getBody(), 500);
+                                    return response()->json([
+                                        'errors' => ['Failed to create policy'],
+                                    ], 500);
                                 }
                             } else {
-                                return response()->json($cardResponse->getBody()->getContents(), 500);
+                                return response()->json([
+                                    'errors' => ['Failed to create policy'],
+                                ], 500);
                             }
                         } else {
-                            return response()->json($cardResponse->getBody()->getContents(), 500);
+                            return response()->json([
+                                'errors' => ['Failed to create policy'],
+                            ], 500);
                         }
                     } else {
-                        return response()->json($paymentResponse->getBody()->getContents(), 500);
+                        return response()->json([
+                            'errors' => ['Failed to create policy'],
+                        ], 500);
                     }
                 } else {
-                    return response()->json($paymentResponse->getBody()->getContents(), 500);
+                    return response()->json([
+                        'errors' => ['Failed to create policy'],
+                    ], 500);
                 }
             } else {
-                return response()->json($response->getBody()->getContents(), 500);
+                return response()->json([
+                    'errors' => ['Failed to create policy'],
+                ], 500);
             }
         } else {
-            return response()->json($response->getBody()->getContents(), 500);
+            return response()->json([
+                'errors' => ['Failed to create policy'],
+            ], 500);
         }
     }
 }
